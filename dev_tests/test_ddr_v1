@@ -1,0 +1,171 @@
+#!/bin/bash
+#
+# date:       11.09.2018 17:18:00
+# authors:    Victor Golovachenko
+#
+
+SCRIPT_NAME=`basename "$0"`
+
+DEV=/dev/spidev2.0
+APP=./app_fpga_ddr_v1
+
+verbose=0
+
+if [ -n "$1" ]; then
+    if [ "$1" == "-h" ]; then
+        echo "Usage: ./$SCRIPT_NAME [option]";
+        echo "Mandatory option:";
+        echo "    -h           help";
+        echo "    -c  <value>  count data (default: count data = 4)";
+        echo "    -v           verbose";
+        echo "";
+        echo "Example using: type into console";
+        echo "    while true; do ./$SCRIPT_NAME -c 16 -v || break; sleep 1; done";
+        echo "";
+        exit 0
+    else
+        if [ "$1" == "-c" ]; then
+            if [ -n "$2" ]; then
+                if [ "$2" -eq "$2" ] 2>/dev/null; then
+                    REG_TEST_ARRAY_COUNT=$2
+
+                    if [ "$3" == "-v" ]; then
+                        verbose=1
+                    fi
+                else
+                    echo "error: value is not a number"
+                    exit 1
+                fi
+            else
+                echo "no arg"
+                exit 1
+            fi
+        else
+            echo "Bad argument: try -h"
+            exit 1
+        fi
+    fi
+else
+    REG_TEST_ARRAY_COUNT=4
+fi
+
+
+
+#i=0
+#count=1
+#while [ "$count" -le $REG_TEST_ARRAY_COUNT ]; do
+#    OFFSET[$count]=$i
+#    let "i += 4"
+#    let "count += 1"
+#done
+#echo "${OFFSET[*]}"
+
+
+count=1
+while [ "$count" -le $REG_TEST_ARRAY_COUNT ]; do
+    OFFSET[$count]=0
+    let "count += 1"
+done
+#echo "${OFFSET[*]}"
+
+count=1
+while [ "$count" -le $REG_TEST_ARRAY_COUNT ]; do
+    while true; do
+        #generate random value
+        ddr_adr=$((0 + RANDOM % 128))
+
+        #search reg_offset value into OFFSET array
+        idx=1
+        while [ "$idx" -le $REG_TEST_ARRAY_COUNT ]; do
+            if [ "${OFFSET[$idx]}" -eq "$ddr_adr" ]; then
+                next_random_value=1
+                break;
+            else
+                next_random_value=0
+            fi
+            let "idx += 1"
+        done
+
+        if [ "$next_random_value" -eq 0 ]; then
+            break;
+        fi
+    done
+
+    OFFSET[$count]=$ddr_adr
+    let "count += 1"
+done
+#echo "${OFFSET[*]}"
+
+#generate address from DDR (the address must be a multiple of 4)
+count=1
+while [ "$count" -le $REG_TEST_ARRAY_COUNT ]; do
+    TMP=${OFFSET[$count]}
+    OFFSET[$count]=$(echo "$TMP * 4" | bc)
+    let "count += 1"
+done
+#echo "${OFFSET[*]}"
+
+echo ""
+echo "******************************"
+echo "Write value to DDR"
+count=1
+while [ "$count" -le $REG_TEST_ARRAY_COUNT ]; do
+    #generate random value and then convert dec to hex
+    printf -v ddr_wdata '%x' $((0 + RANDOM % 65535))
+    printf -v ddr_adr '%x' ${OFFSET[$count]}
+    printf -v count_align '%03d' $count
+
+    #save output to variable
+    WRITE_RESULT=$($APP -d $DEV --addr $ddr_adr --wdata $ddr_wdata)
+    if [ $? -ne 0 ]; then
+        #catch error
+        echo "$WRITE_RESULT"
+        exit 1
+    fi
+
+    if [ "$verbose" == "1" ]; then
+        echo "$WRITE_RESULT [$count_align]"
+    fi
+
+    #printf write data value and then cat first 2 symbols (0x)
+    WDATA_ARRAY[$count]=`echo "$WRITE_RESULT" | awk '{print $8}' | sed -e's/^.\{2\}//'`
+
+    let "count += 1"
+done
+#echo "${WDATA_ARRAY[*]}"
+
+echo ""
+echo "Read value from DDR"
+count=1
+while [ "$count" -le $REG_TEST_ARRAY_COUNT ]; do
+    printf -v ddr_adr '%x' ${OFFSET[$count]}
+    printf -v count_align '%03d' $count
+
+    #save output to variable
+    READ_RESULT=$($APP -d $DEV --addr $ddr_adr)
+    if [ $? -ne 0 ]; then
+        #catch error
+        echo "$READ_RESULT"
+        exit 1
+    fi
+
+    if [ "$verbose" == "1" ]; then
+        echo "$READ_RESULT [$count_align]"
+    fi
+
+    #printf last column and then cat first 2 symbols (0x)
+    RDATA_ARRAY[$count]=`echo "$READ_RESULT" | awk '{print $8}' | sed -e's/^.\{2\}//'`
+
+    if [ "${WDATA_ARRAY[$count]}" != "${RDATA_ARRAY[$count]}" ]; then
+        echo ""
+        echo "error: waddr[$ddr_adr]=${WDATA_ARRAY[$count]}; raddr[$ddr_adr]=${RDATA_ARRAY[$count]}  [$count_align]"
+        exit 1
+    fi
+
+    let "count += 1"
+done
+#echo "${RDATA_ARRAY[*]}"
+
+echo " "
+echo "test passed"
+echo " "

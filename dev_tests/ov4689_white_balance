@@ -1,0 +1,218 @@
+#!/bin/bash
+#
+# authors:    Victor Golovachenko
+#
+
+SCRIPT_NAME=`basename "$0"`
+
+APP_I2C=./app_fpga_i2c
+I2C_DEV_ADDR=0x36
+
+APP_SPI=/usr/local/bin/app_fpga_reg
+
+if ! [ -z $1 ]; then
+    if [ "$1" == "-h" ]; then
+        echo "Usage: ./$SCRIPT_NAME [option]";
+        echo "Mandatory option:";
+        echo "    -h      help";
+        echo "    -d      linux device: juno   - /dev/i2c-2"
+        echo "                          falcon - /dev/i2c-0"
+        echo "";
+        echo "    -d1     linux device: juno   - /dev/spidev2.0"
+        echo "                          falcon - /dev/spidev0.0"
+        echo "";
+        echo "Example using:";
+        echo "    ./$SCRIPT_NAME -d /dev/i2c-2 -d1 /dev/spidev2.0";
+        echo "";
+        exit 0
+    else
+        if [ "$1" == "-d" ]; then
+            DEV_I2C=$2
+
+            if [ "$3" == "-d1" ]; then
+                DEV_SPI=$4
+            else
+                echo "Bad argument: try -h"
+                exit 0
+            fi
+        else
+            if [ "$1" == "-d1" ]; then
+                DEV_SPI=$2
+
+                if [ "$3" == "-d" ]; then
+                    DEV_I2C=$4
+                else
+                    echo "Bad argument: try -h"
+                    exit 0
+                fi
+            else
+                echo "Bad argument: try -h"
+                exit 0
+            fi
+        fi
+    fi
+else
+    echo "Bad argument: try -h"
+    exit 0
+fi
+
+
+FPGA_WR_OFFSET=0
+FPGA_RD_OFFSET=64
+
+FPGA_REG_RGB_ACC_CTRL=$(echo "$FPGA_WR_OFFSET + 43" | bc)
+
+FPGA_RD_REG_RGB_ACC_CTRL=$(echo "$FPGA_RD_OFFSET + 48" | bc)
+FPGA_RD_REG_R_ACC=$(echo "$FPGA_RD_OFFSET + 42" | bc)
+FPGA_RD_REG_G_ACC=$(echo "$FPGA_RD_OFFSET + 44" | bc)
+FPGA_RD_REG_B_ACC=$(echo "$FPGA_RD_OFFSET + 46" | bc)
+
+#--------------------------------------------
+#echo "Get accomulation value for R,G,B
+#--------------------------------------------
+echo ""
+echo "CTRL: Set Latch"
+$APP_SPI -d $DEV_SPI --addr $FPGA_RD_REG_RGB_ACC_CTRL
+$APP_SPI -d $DEV_SPI --addr $FPGA_REG_RGB_ACC_CTRL --wdata 1
+
+sleep 1;
+
+$APP_SPI -d $DEV_SPI --addr $FPGA_RD_REG_RGB_ACC_CTRL
+
+echo ""
+echo "Get R_ACC:"
+DATE_LSB_RESULT=$($APP_SPI -d $DEV_SPI --addr $(echo "$FPGA_RD_REG_R_ACC + 0" | bc))
+if [ $? -ne 0 ]; then
+    #catch error
+    echo "$DATE_LSB_RESULT"
+    exit 1
+fi
+echo "$DATE_LSB_RESULT"
+DATE_LSB=`echo "$DATE_LSB_RESULT" | awk '{print $9}' | sed -e's/^.\{2\}//'`
+
+DATE_MSB_RESULT=$($APP_SPI -d $DEV_SPI --addr $(echo "$FPGA_RD_REG_R_ACC + 1" | bc))
+if [ $? -ne 0 ]; then
+    #catch error
+    echo "$DATE_MSB_RESULT"
+    exit 1
+fi
+echo "$DATE_MSB_RESULT"
+DATE_MSB=`echo "$DATE_MSB_RESULT" | awk '{print $9}' | sed -e's/^.\{2\}//'`
+
+printf -v R_ACC_dec '%d' 0x$DATE_MSB$DATE_LSB
+echo "Accomulation value (R) = 0x$DATE_MSB$DATE_LSB; $R_ACC_dec"
+
+
+echo ""
+echo "Get G_ACC:"
+DATE_LSB_RESULT=$($APP_SPI -d $DEV_SPI --addr $(echo "$FPGA_RD_REG_G_ACC + 0" | bc))
+if [ $? -ne 0 ]; then
+    #catch error
+    echo "$DATE_LSB_RESULT"
+    exit 1
+fi
+echo "$DATE_LSB_RESULT"
+DATE_LSB=`echo "$DATE_LSB_RESULT" | awk '{print $9}' | sed -e's/^.\{2\}//'`
+
+DATE_MSB_RESULT=$($APP_SPI -d $DEV_SPI --addr $(echo "$FPGA_RD_REG_G_ACC + 1" | bc))
+if [ $? -ne 0 ]; then
+    #catch error
+    echo "$DATE_MSB_RESULT"
+    exit 1
+fi
+echo "$DATE_MSB_RESULT"
+DATE_MSB=`echo "$DATE_MSB_RESULT" | awk '{print $9}' | sed -e's/^.\{2\}//'`
+
+printf -v G_ACC_dec '%d' 0x$DATE_MSB$DATE_LSB
+echo "Accomulation value (G) = 0x$DATE_MSB$DATE_LSB; $G_ACC_dec"
+
+
+echo ""
+echo "Get B_ACC:"
+DATE_LSB_RESULT=$($APP_SPI -d $DEV_SPI --addr $(echo "$FPGA_RD_REG_B_ACC + 0" | bc))
+if [ $? -ne 0 ]; then
+    #catch error
+    echo "$DATE_LSB_RESULT"
+    exit 1
+fi
+echo "$DATE_LSB_RESULT"
+DATE_LSB=`echo "$DATE_LSB_RESULT" | awk '{print $9}' | sed -e's/^.\{2\}//'`
+
+DATE_MSB_RESULT=$($APP_SPI -d $DEV_SPI --addr $(echo "$FPGA_RD_REG_B_ACC + 1" | bc))
+if [ $? -ne 0 ]; then
+    #catch error
+    echo "$DATE_MSB_RESULT"
+    exit 1
+fi
+echo "$DATE_MSB_RESULT"
+DATE_MSB=`echo "$DATE_MSB_RESULT" | awk '{print $9}' | sed -e's/^.\{2\}//'`
+
+printf -v B_ACC_dec '%d' 0x$DATE_MSB$DATE_LSB
+echo "Accomulation value (B) = 0x$DATE_MSB$DATE_LSB; $B_ACC_dec"
+
+
+echo ""
+echo "CTRL: Clr Latch"
+$APP_SPI -d $DEV_SPI --addr $FPGA_REG_RGB_ACC_CTRL --wdata 0
+
+
+#--------------------------------------------
+#echo "Calculation Coeff:"
+#--------------------------------------------
+echo ""
+echo "Calculation Coeff:"
+R_AVG=$(echo "scale=4; $R_ACC_dec / (1286 * 726)" | bc)
+G_AVG=$(echo "scale=4; $G_ACC_dec / (1286 * 726)" | bc)
+B_AVG=$(echo "scale=4; $B_ACC_dec / (1286 * 726)" | bc)
+echo "x_AVG = ACC(value) / (1286 *726):"
+echo "R_AVG = $R_AVG; G_AVG = $G_AVG; B_AVG = $B_AVG"
+
+RGB_AVG=$(echo "scale=4; ($R_AVG + $G_AVG + $B_AVG) / 3" | bc)
+echo "($R_AVG + $G_AVG + $B_AVG) / 3 = $RGB_AVG"
+
+GR=$(echo "scale=4; $RGB_AVG / $R_AVG" | bc)
+GR_1024=$(echo "$GR * 1024" | bc)
+printf -v WB_R "%.0f" $(echo "scale=2;$GR * 1024" | bc)
+printf -v WB_R_hex "%X" $WB_R
+
+GG=$(echo "scale=4; $RGB_AVG / $G_AVG" | bc)
+GG_1024=$(echo "$GG * 1024" | bc)
+printf -v WB_G "%.0f" $(echo "scale=2;$GG * 1024" | bc)
+printf -v WB_G_hex "%X" $WB_G
+
+GB=$(echo "scale=4; $RGB_AVG / $B_AVG" | bc)
+GB_1024=$(echo "$GB * 1024" | bc)
+printf -v WB_B "%.0f" $(echo "scale=2;$GB * 1024" | bc)
+printf -v WB_B_hex "%X" $WB_B
+
+echo "AVG/R = $GR * 1024 = $GR_1024. WB_R = $WB_R(dec); $WB_R_hex(hex); "
+echo "AVG/G = $GG * 1024 = $GG_1024. WB_G = $WB_G(dec); $WB_G_hex(hex); "
+echo "AVG/B = $GB * 1024 = $GB_1024. WB_B = $WB_B(dec); $WB_B_hex(hex); "
+
+
+echo ""
+#--------------------------------------------
+#echo "Update Value to ov4689:"
+#--------------------------------------------
+echo ""
+echo "Update Value to ov4689:"
+echo ""
+echo "R channel:"
+printf -v WB_R_hex_l '%02X' $(($WB_R & 255))
+printf -v WB_R_hex_h '%02X' $(($WB_R >> 8))
+$APP_I2C -d $DEV_I2C --i2c_adev $I2C_DEV_ADDR --addr 0x500C --wdata 0x$WB_R_hex_h || exit 1
+$APP_I2C -d $DEV_I2C --i2c_adev $I2C_DEV_ADDR --addr 0x500D --wdata 0x$WB_R_hex_l || exit 1
+
+echo ""
+echo "G channel:"
+printf -v WB_G_hex_l '%02X' $(($WB_G & 255))
+printf -v WB_G_hex_h '%02X' $(($WB_G >> 8))
+$APP_I2C -d $DEV_I2C --i2c_adev $I2C_DEV_ADDR --addr 0x500E --wdata 0x$WB_G_hex_h || exit 1
+$APP_I2C -d $DEV_I2C --i2c_adev $I2C_DEV_ADDR --addr 0x500F --wdata 0x$WB_G_hex_l || exit 1
+
+echo ""
+echo "B channel:"
+printf -v WB_B_hex_l '%02X' $(($WB_B & 255))
+printf -v WB_B_hex_h '%02X' $(($WB_B >> 8))
+$APP_I2C -d $DEV_I2C --i2c_adev $I2C_DEV_ADDR --addr 0x5010 --wdata 0x$WB_B_hex_h || exit 1
+$APP_I2C -d $DEV_I2C --i2c_adev $I2C_DEV_ADDR --addr 0x5011 --wdata 0x$WB_B_hex_l || exit 1

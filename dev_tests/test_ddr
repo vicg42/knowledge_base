@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+# authors:    Victor Golovachenko
+#
+
+SCRIPT_NAME=`basename "$0"`
+
+DEV=/dev/spidev2.0
+APP=./app_fpga_ddr_v3
+
+if [ -n "$1" ]; then
+    if [ "$1" == "-h" ]; then
+        echo "Usage: ./$SCRIPT_NAME [option]";
+        echo "Mandatory option:";
+        echo "    -h           help";
+        echo "    -s  <value>  test size[hex] (byte count)";
+        echo "";
+        echo "Example using:";
+        echo "    ./$SCRIPT_NAME -s 64;"
+        echo "";
+        exit 0
+    else
+        if [ "$1" == "-s" ]; then
+            if [ -n "$2" ]; then
+                TEST_SIZE=$2
+            else
+                echo "Bad argument: try -h"
+                exit 1
+            fi
+        else
+            echo "Bad argument: try -h"
+            exit 1
+        fi
+    fi
+else
+    echo "Bad argument: try -h"
+    exit 1
+fi
+
+
+$APP -d $DEV --addr 0x00 --size $TEST_SIZE || exit 1
+

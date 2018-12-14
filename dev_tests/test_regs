@@ -1,0 +1,152 @@
+#!/bin/bash
+#
+# date:       11.09.2018 17:18:00
+# authors:    Victor Golovachenko
+#
+
+SCRIPT_NAME=`basename "$0"`
+
+APP=/usr/local/bin/app_fpga_reg
+
+REG_TEST_ARRAY_COUNT=12
+FPGA_WR_OFFSET=0
+FPGA_RD_OFFSET=64
+app_fpga_reg_ARRAY=$(echo "$FPGA_WR_OFFSET + 26" | bc)
+FPGA_RD_REG_TEST_ARRAY=$(echo "$FPGA_RD_OFFSET + 15" | bc)
+
+LINER_OFFSET=0
+if ! [ -z $1 ]; then
+    if [ "$1" == "-h" ]; then
+        echo "Usage: ./$SCRIPT_NAME [option]";
+        echo "Mandatory option:";
+        echo "    -h      help";
+        echo "    -d      linux device: juno   - /dev/spidev2.0"
+        echo "                          falcon - /dev/spidev0.0"
+        echo "    -l      liner generation offset and value for test registers array. (default random generation)";
+        echo "";
+        echo "Example using: type into console";
+        echo "    while true; do ./$SCRIPT_NAME -d /dev/spidev2.0 || break; sleep 1; done";
+        echo "";
+        exit 0
+    else
+        if [ "$1" == "-d" ]; then
+            DEV=$2
+
+            if [ "$3" == "-l" ]; then
+                LINER_OFFSET=1
+            fi
+        else
+            echo "Bad argument: try -h"
+            exit 0
+        fi
+    fi
+else
+    echo "Bad argument: try -h"
+    exit 0
+fi
+
+
+count=1
+while [ "$count" -le $REG_TEST_ARRAY_COUNT ]; do
+    OFFSET[$count]=$(echo "$count - 1" | bc)
+    let "count += 1"
+done
+
+if [ "$LINER_OFFSET" -eq 0 ]; then
+    #generate random offset for array REG_TEST_ARRAY
+    count=1
+    while [ "$count" -le $REG_TEST_ARRAY_COUNT ]; do
+        OFFSET[$count]=1
+        let "count += 1"
+    done
+
+    count=1
+    while [ "$count" -le $REG_TEST_ARRAY_COUNT ]; do
+        while true; do
+            #generate random value
+            reg_offset=$((0 + RANDOM % 15))
+            idx=1
+
+            #search reg_offset value into OFFSET array
+            while [ "$idx" -le $REG_TEST_ARRAY_COUNT ]; do
+                if [ "${OFFSET[$idx]}" -eq "$reg_offset" ]; then
+                    next_random_value=1
+                    break;
+                else
+                    next_random_value=0
+                fi
+                let "idx += 1"
+            done
+
+            if [ "$next_random_value" -eq 0 ]; then
+                break;
+            fi
+        done
+
+        OFFSET[$count]=$reg_offset
+        let "count += 1"
+    done
+fi
+#echo "${OFFSET[*]}"
+
+
+echo "******************************"
+echo "Write value to reg_test_array"
+count=1
+while [ "$count" -le $REG_TEST_ARRAY_COUNT ]; do
+    #generate random value and then convert dec to hex
+    printf -v reg_wdata '%X' $((1 + RANDOM % 65535))
+
+    #save output to variable
+    printf -v count_align '%02d' $count
+    WRITE_RESULT=$($APP -d $DEV --addr $(echo "$app_fpga_reg_ARRAY + ${OFFSET[$count]}" | bc) --wdata $reg_wdata)
+    if [ $? -ne 0 ]; then
+        #catch error
+        echo "$WRITE_RESULT"
+        exit 1
+    fi
+    echo "$WRITE_RESULT [$count_align]"
+
+    #printf write data value and then cat first 2 symbols (0x)
+    WDATA_ARRAY[$count]=`echo "$WRITE_RESULT" | awk '{print $9}' | sed -e's/^.\{2\}//'`
+
+    let "count += 1"
+done
+#echo "${WDATA_ARRAY[*]}"
+
+
+echo ""
+echo "Read value from reg_test_array"
+count=1
+while [ "$count" -le $REG_TEST_ARRAY_COUNT ]; do
+    #save output to variable
+    printf -v count_align '%02d' $count
+    READ_RESULT=$($APP -d $DEV --addr $(echo "$FPGA_RD_REG_TEST_ARRAY + ${OFFSET[$count]}" | bc))
+    if [ $? -ne 0 ]; then
+        #catch error
+        echo "$READ_RESULT"
+        exit 1
+    fi
+    echo "$READ_RESULT [$count_align]"
+
+    #printf last column and then cat first 2 symbols (0x)
+    RDATA_ARRAY[$count]=`echo "$READ_RESULT" | awk '{print $9}' | sed -e's/^.\{2\}//'`
+
+    if [ "${WDATA_ARRAY[$count]}" != "${RDATA_ARRAY[$count]}" ]; then
+        wadr_dec=$(echo "$app_fpga_reg_ARRAY + ${OFFSET[$count]}" | bc);
+        printf -v wadr_hex '%X' $wadr_dec
+
+        radr_dec=$(echo "$FPGA_RD_REG_TEST_ARRAY + ${OFFSET[$count]}" | bc);
+        printf -v radr_hex '%X' $radr_dec
+
+        echo ""
+        echo "error: waddr[$wadr_hex(hex)[$wadr_dec(dec)]]=${WDATA_ARRAY[$count]}; raddr[$radr_hex(hex)[$radr_dec(dec)]]=${RDATA_ARRAY[$count]}  [$count_align]"
+        exit 1
+    fi
+
+    let "count += 1"
+done
+
+echo " "
+echo "test passed"
+echo " "
