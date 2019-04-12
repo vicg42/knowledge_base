@@ -1,0 +1,1 @@
+%XILINX%\bin\nt64\xtclsh ./_fpga_regs_ise.tcl convert_2_hfile
