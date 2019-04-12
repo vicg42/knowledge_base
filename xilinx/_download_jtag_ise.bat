@@ -1,0 +1,1 @@
+%XILINX%bin\nt64\impact -batch ./_download_jtag.cmd
