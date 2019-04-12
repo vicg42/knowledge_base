@@ -1,0 +1,1 @@
+%XILINX_SDK%\bin\xsdk.bat -batch ./bootgen_main.tcl

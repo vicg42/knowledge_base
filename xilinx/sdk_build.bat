@@ -1,0 +1,1 @@
+%XILINX_SDK%\bin\xsdk.bat -batch ./sdk_build.tcl ./sdk
