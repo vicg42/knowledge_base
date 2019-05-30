@@ -59,8 +59,8 @@ proc uboot_memory_config args {
 		# use OCM3 - 4KB
 		uboot_conf_define $fid CONFIG_SYS_INIT_RAM_ADDR 0xFFFF0000
 		uboot_conf_define $fid CONFIG_SYS_INIT_RAM_SIZE 0x2000
-		puts $fid {#define CONFIG_SYS_INIT_SP_ADDR	(CONFIG_SYS_INIT_RAM_ADDR + \ 
-				CONFIG_SYS_INIT_RAM_SIZE - \ 
+		puts $fid {#define CONFIG_SYS_INIT_SP_ADDR	(CONFIG_SYS_INIT_RAM_ADDR + \
+				CONFIG_SYS_INIT_RAM_SIZE - \
 				GENERATED_GBL_DATA_SIZE)}
 	}
 }
@@ -113,7 +113,7 @@ proc gen_jffs2_config {fid db_dict ip main_key config_cat config_var} {
 
 proc report_partition_layout {part_name} {
 	global kconfig_dict
-	#lassign {"-" "-" "-" "-"} 
+	#lassign {"-" "-" "-" "-"}
 	set media {null}
 	set image {null}
 	set offset {null}
@@ -256,7 +256,7 @@ proc uboot_bootenv {fid kconfig_fid} {
 	puts $fid "#define CONFIG_EXTRA_ENV_SETTINGS \\"
 	# common setting for serial multi
 	if {[dict exists $kconfig_dict serial]} {
-	puts $fid {	SERIAL_MULTI \ 
+	puts $fid {	SERIAL_MULTI \
 	CONSOLE_ARG \ }
 	}
 	if {[dict exists $kconfig_dict usb]} {
@@ -280,7 +280,7 @@ proc uboot_bootenv {fid kconfig_fid} {
 		}
 	}
 
-	# netconsole args if ethernet available 
+	# netconsole args if ethernet available
 	if {$eth_count > 0} {
 		set data {	"nc=setenv stdout nc;setenv stdin nc;\0" \ }
 		set data "${data}\n	[gen_eth_env_data]"
@@ -296,11 +296,11 @@ proc uboot_bootenv {fid kconfig_fid} {
 	set nstart [format "0x%08x" [expr $mem_base + $netoffset]]
 	set dtbnstart [format "0x%08x" [expr $nstart + 0x13FFF000]]
 	set loadbootenv [format "0x%08x" [expr $mem_base + 0x100000]]
-	set data {	"autoload=no\0" \ 
-	"sdbootdev=@sdbootdev@\0" \ 
-	"clobstart=@nstart@\0" \ 
-	"netstart=@nstart@\0" \ 
-	"dtbnetstart=@dtbnstart@\0" \ 
+	set data {	"autoload=no\0" \
+	"sdbootdev=@sdbootdev@\0" \
+	"clobstart=@nstart@\0" \
+	"netstart=@nstart@\0" \
+	"dtbnetstart=@dtbnstart@\0" \
 	"loadaddr=@nstart@\0" \ }
 	regsub -all {@nstart@} $data $nstart data
 	regsub -all {@sdbootdev@} $data $sdbootdev data
@@ -328,7 +328,7 @@ proc uboot_bootenv {fid kconfig_fid} {
 					}
 					"dtb" {
 						if {$eth_count > 0} {
-							# FIXME: this is will not work correctly 
+							# FIXME: this is will not work correctly
 							if {[string equal "null" $dtb_offset]} {
 								set dtb_offset "0x180000"
 								set rdtb_offset $dtb_offset
@@ -346,7 +346,7 @@ proc uboot_bootenv {fid kconfig_fid} {
 					}
 				}
 
-				eval "append data \"\\n\" \{	\"${part_tmp}size=@tsize@\\0\" \\ 
+				eval "append data \"\\n\" \{	\"${part_tmp}size=@tsize@\\0\" \\
 	\"${part_tmp}start=@tstart@\\0\" \\ \}"
 				eval regsub -all {@tsize@} \$data \$${part_tmp}_size data
 				eval regsub -all {@tstart@} \$data \$${part_tmp}_offset data
@@ -401,8 +401,8 @@ proc uboot_bootenv {fid kconfig_fid} {
 			puts $fid {			"run uenvcmd; " \ }
 			puts $fid {		"fi\0" \ }
 		}
-		append data "\n" {	"fault=echo ${img} image size is greater than allocated place - partition ${img} is NOT UPDATED\0" \ 
-	"test_crc=if imi ${clobstart}; then run test_img; else echo ${img} Bad CRC - ${img} is NOT UPDATED; fi\0" \ 
+		append data "\n" {	"fault=echo ${img} image size is greater than allocated place - partition ${img} is NOT UPDATED\0" \
+	"test_crc=if imi ${clobstart}; then run test_img; else echo ${img} Bad CRC - ${img} is NOT UPDATED; fi\0" \
 	"test_img=setenv var \"if test ${filesize} -gt ${psize}\\; then run fault\\; else run ${installcmd}\\; fi\"; run var; setenv var\0" \ }
 	}
 
@@ -418,11 +418,11 @@ proc uboot_bootenv {fid kconfig_fid} {
 		set nstart [format "0x%08x" [expr $mem_base + $netoffset]]
 		set dtbnstart [format "0x%08x" [expr $nstart + 0x13FFF000]]
 		# check arch for bootfile
-		set data {	"boot_img=@bootfile@\0" \ 
-	"kernel_img=image.ub\0" \ 
-	"dtb_img=system.dtb\0" \ 
-	"netstart=@nstart@\0" \ 
-	"dtbnetstart=@dtbnstart@\0" \ 
+		set data {	"boot_img=@bootfile@\0" \
+	"kernel_img=image.ub\0" \
+	"dtb_img=system.dtb\0" \
+	"netstart=@nstart@\0" \
+	"dtbnetstart=@dtbnstart@\0" \
 	"loadaddr=@nstart@\0" \ }
 		regsub -all {@bootfile@} $data $bootfile data
 		regsub -all {@nstart@} $data $nstart data
@@ -470,7 +470,7 @@ proc gen_flash_env {flash_typ part_tmp got_sd} {
 			}
 		}
 		"spi" {
-			set data {	"install_@part_tmp@=sf probe 0 && sf erase ${@part_tmp@start} ${@part_tmp@size} && " \ 
+			set data {	"install_@part_tmp@=sf probe 0 && sf erase ${@part_tmp@start} ${@part_tmp@size} && " \
 		"sf write ${clobstart} ${@part_tmp@start} ${filesize}\0" \ }
 			switch -exact $part_tmp {
 				"bootenv" {
@@ -809,7 +809,7 @@ proc get_dma_slave {fid db_dict ip main_key config_cat config_var} {
 	}
 }
 
-# get the interrupt controller that is connected to the 
+# get the interrupt controller that is connected to the
 proc get_current_ip_intc {target_ip} {
 	set proc_handle [hsi get_cells $target_ip]
 	set proc_ips [hsi::utils::get_proc_slave_periphs $proc_handle]
