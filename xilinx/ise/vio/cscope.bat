@@ -1,0 +1,1 @@
+%XILINX%bin\nt64\xtclsh  ./csevio_usrctrl.tcl -usb
