@@ -5,11 +5,11 @@ echo ""
 
 echo "Checking installed pakages"
 
-sudo add-apt-repository ppa:cran/opencv-4.2
+#sudo add-apt-repository ppa:cran/opencv-4.2
 sudo apt update
 
 for arg in openssh-server \
-unzip mc tmux wget \
+unzip mc tmux wget snapd \
 git build-essential cmake \
 libjpeg-dev libpng-dev libtiff-dev libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev libgtk-3-dev libatlas-base-dev gfortran \
 libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
@@ -48,5 +48,10 @@ done
 ##GIT config
 ##git config --global user.name "v.golovachenko"
 ##git config --global user.email "v.golovachenko@sparklab.by"
+## mc -e ~/.gitconfig
+#[alias]
+#	logg = log --pretty=format:\"%h %ad [%cn] | %s%d \" --date=short --graph --stat --decorate=short
+#	ls = log --pretty=format:\"%h %ad [%cn] | %s%d \" --date=short --graph --stat --decorate=short
 
-
+#Drawio
+#sudo snap install drawio
