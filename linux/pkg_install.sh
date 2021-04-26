@@ -9,7 +9,7 @@ echo "Checking installed pakages"
 sudo apt update
 
 for arg in openssh-server \
-unzip mc tmux wget snapd \
+unzip mc tmux wget snapd minicom \
 git build-essential cmake \
 libjpeg-dev libpng-dev libtiff-dev libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev libgtk-3-dev libatlas-base-dev gfortran \
 libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
