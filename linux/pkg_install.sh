@@ -5,8 +5,12 @@ echo ""
 
 echo "Checking installed pakages"
 
+#opencv4.2
+#--1
 #sudo add-apt-repository ppa:cran/opencv-4.2
-sudo apt update
+#sudo apt update
+#--2
+#https://ubuntu.pkgs.org/20.10/ubuntu-universe-arm64/libopencv-dev_4.2.0+dfsg-6build6_arm64.deb.html
 
 for arg in openssh-server \
 unzip mc tmux wget snapd minicom \
@@ -16,7 +20,8 @@ libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1
 gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa \
 gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio \
 python3-venv python3-pip python-pip \
-libopencv-dev
+#libopencv-dev
+libopencv4.2-jni
 do
     dpkg -s $arg &> /dev/null
     if [[ ! $? -eq 0 ]]; then
@@ -55,3 +60,12 @@ done
 
 #Drawio
 #sudo snap install drawio
+
+#minicom
+#CTRL-A  x -выход из программы
+#CTRL-A  z -вход в настройки
+## настройки COM порта
+#1. CTRL-A  z
+#2. O
+#3. Настройки последовательного порта
+#4. Аппаратное управление протоколом - НЕТ
