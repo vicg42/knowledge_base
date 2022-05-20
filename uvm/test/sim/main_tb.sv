@@ -35,7 +35,7 @@ reg signed [15:0] rgb2ycbcr_c2  =  (2**PIXEL_WIDTH)/2; //  128
 bit clk = 0;          // simple clock
 always #5 clk = ~clk; // 100 MHz
 
-dut_if dut_if_h(clk); // connect clk to dut_if.clk
+dut_if #(.PIXEL_WIDTH(PIXEL_WIDTH)) dut_if_h (clk); // connect clk to dut_if.clk
 
 rgb_2_ycbcr #(
     .PIXEL_WIDTH(PIXEL_WIDTH),

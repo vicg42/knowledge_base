@@ -13,7 +13,7 @@ vlog ./main_tb.sv -sv
 
 vsim -t 1ps -novopt +notimingchecks -lib work main_tb
 
-#do aurora_axi_tx_mux_tb_wave.do
+do dut_wave.do
 view wave
 config wave -timelineunits us
 view structure
