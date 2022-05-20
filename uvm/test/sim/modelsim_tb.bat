@@ -1,0 +1,1 @@
+c:\questasim_10.4c\win32\vsim -do ./modelsim_tb.do
