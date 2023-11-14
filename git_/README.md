@@ -19,3 +19,5 @@
     ```
 
 # Github (private<->public)
+![1](https://github.com/vicg42/knowledge_base/blob/master/git_/github-change-visibalty-01.jpg)
+![2](https://github.com/vicg42/knowledge_base/blob/master/git_/github-change-visibalty-02.jpg)
