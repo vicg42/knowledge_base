@@ -2,6 +2,7 @@
 
 WSL_CONF_FILE=wsl.conf
 WSL_MAC_FILE=wsl.mac.sh
+WSL_MAC_FILE=wsl.mac.txt
 DST_PATH=/etc
 
 if [[ ! -f $DST_PATH/$WSL_CONF_FILE ]]; then
