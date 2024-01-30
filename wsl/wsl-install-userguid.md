@@ -14,4 +14,4 @@
 1. `./wsl-xfce-gui-install.sh`
 1. `sudo /etc/init.d/xrdp start`
 1. Windows(Start) &rarr; Remote Desktop Connection (localhost:3390)
-1. `./wsl-xfce-gui-settings.md`
+1. [Setting GUI xfce](https://github.com/vicg42/knowledge_base/blob/master/wsl/wsl-xfce-gui-settings.md)
