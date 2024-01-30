@@ -1,5 +1,5 @@
 # Install WSL, Ubuntu, GUI xfce
-1. Windows(Start) &rarr; Microsoft Store &rarr; Windows Subsystem for Linux
+1. Windows(Start) &rarr; Microsoft Store &rarr; Windows Subsystem for Linux -- install
 1. [install chocolatey](https://chocolatey.org/install#individual)
 1. open PowerShell (Administration Mode)
     * `choco install chocolateygui`
@@ -13,8 +13,12 @@
 1. [download wsl-xfce-gui-install.sh](https://github.com/vicg42/knowledge_base/blob/master/wsl/wsl-xfce-gui-install.sh)
 1. `cp /mnt/<path to wsl-xfce-gui-install.sh> ./`
 1. `./wsl-xfce-gui-install.sh`
-1. Run rdp
-    * `sudo /etc/init.d/xrdp start`
+
+# Run xfce GUI
+1. Windows(Start) &rarr; Microsoft Store &rarr; Windows Terminal -- install
+1. Windows(Start) &rarr; Terminal
+1. `wsl`
+1. `sudo /etc/init.d/xrdp start`
 1. Windows(Start) &rarr; Remote Desktop Connection (localhost:3390)
 
 # Settings xfce GUI
