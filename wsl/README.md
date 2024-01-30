@@ -34,5 +34,5 @@
 1. [download wsl-run-script.sh](https://github.com/vicg42/knowledge_base/blob/master/wsl/wsl-run-script.sh)
 1. [download wsl-run-script-install.sh](https://github.com/vicg42/knowledge_base/blob/master/wsl/wsl-run-script-install.sh)
 1. `cp /mnt/<path to wsl-run-script.sh .. > ./`
-1. touch ./wsl.mac
+1. `touch ./wsl.mac`
     * add mac address. (mac address format:  xx:xx:xx:xx:xx:xx)
