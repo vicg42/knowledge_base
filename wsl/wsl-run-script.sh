@@ -7,24 +7,34 @@ if [[ ! -f $USR_MAC_ADDRES_FILE ]]; then
 fi
 
 # mac addres format:  xx:xx:xx:xx:xx:xx
-USR_MAC_ADDRES=$(cat $USR_MAC_ADDRES_FILE)
+mac=$(cat $USR_MAC_ADDRES_FILE)
+if ! ip link show | grep $mac; then
+    winip=$(ip route | awk '/default via /{print $3; exit}' 2>/dev/null)
+    locnetip=$(ip address show dev eth0 | awk '/inet /{print $2; exit}' 2>/dev/null)
 
-if ! ifconfig -a | grep bond0; then
-    #https://github.com/microsoft/WSL/issues/9989#issuecomment-1513961916
-    ip link add name bond0 type bond mode active-backup
-fi
+    echo 1 | sudo tee -a /proc/sys/net/ipv4/ip_forward
 
-#https://github.com/microsoft/WSL/issues/5352#issuecomment-1076336583
-gateway=$(ip route | awk '/default via /{print $3; exit}' 2>/dev/null)
-if ! ip link show | grep $USR_MAC_ADDRES; then
-    sudo ip link set dev eth0 down || exit 1
-    sudo ip link set dev eth0 name eth1 || exit 1
-    sudo ip link set dev eth1 up || exit 1
-    sudo ip route add default via $gateway dev eth1 || exit 1
-    sudo ip link set dev bond0 down || exit 1
-    sudo ip link set dev bond0 address $USR_MAC_ADDRES || exit 1
-    sudo ip link set dev bond0 name eth0 || exit 1
-    sudo ip link set dev eth0 up || exit 1
+    sudo ip link add veth1a type veth peer name veth1b
+    sudo ip netns add ns0
+    sudo ip link set veth1b netns ns0
+    sudo ip link set eth0 netns ns0
+
+    sudo ip netns exec ns0 ip link set dev veth1b up
+    sudo ip netns exec ns0 ip link set dev eth0 up
+    sudo ip netns exec ns0 ip link set lo up
+    sudo ip netns exec ns0 ip addr add $locnetip dev eth0
+    sudo ip netns exec ns0 ip route add default via $winip dev eth0 proto kernel
+    sudo ip netns exec ns0 ip addr add 10.10.10.2/24 dev veth1b
+
+    sudo ip link set dev veth1a name eth0
+    sudo ip link set eth0 addr $mac
+    sudo ip link set dev eth0 up
+    sudo ip addr add 10.10.10.1/24 dev eth0
+    sudo ip route add default via 10.10.10.2 dev eth0
+
+    sudo ip netns exec ns0 iptables -A FORWARD -o eth0 -i veth1b -j ACCEPT
+    sudo ip netns exec ns0 iptables -A FORWARD -i eth0 -o veth1b -j ACCEPT
+    sudo ip netns exec ns0 iptables -t nat -A POSTROUTING -s 10.10.10.1/24 -o eth0 -j MASQUERADE
 fi
 
 exit 0
