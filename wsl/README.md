@@ -1,13 +1,16 @@
 # Install WSL, Ubuntu, GUI xfce
-1. Windows(Start) &rarr; Microsoft Store &rarr; Windows Subsystem for Linux -- install
+1. Install WSL
+    * Windows(Start) &rarr; Microsoft Store &rarr; Windows Subsystem for Linux
 1. [install chocolatey](https://chocolatey.org/install#individual)
 1. open PowerShell (Administration Mode)
     * `choco install chocolateygui`
-1. Windows(Start) &rarr; Chocolatey GUI
-    1. Select chocolatey
-    1. Search: ubuntu
-        * install ubunto 20.4.0.20220127
-1. Windows(Start) &rarr; Ubuntu
+1. Run Chocolatey GUI
+    * Windows(Start) &rarr; Chocolatey GUI
+        1. Select chocolatey
+        1. Search: ubuntu
+            * install ubunto 20.4.0.20220127
+1. run Ubuntu
+    * Windows(Start) &rarr; Ubuntu
 1. `mkdir ~/work`
 1. `cd ~/work`
 1. `sudo apt update && sudo apt -y upgrade`
@@ -16,11 +19,14 @@
 1. `./wsl-xfce-gui-install.sh`
 
 # Run xfce GUI
-1. Windows(Start) &rarr; Microsoft Store &rarr; Windows Terminal -- install
-1. Windows(Start) &rarr; Terminal
+1. Install Windows Terminal
+    * Windows(Start) &rarr; Microsoft Store &rarr; Windows Terminal
+1. Run Windows Terminal
+    * Windows(Start) &rarr; Terminal
 1. `wsl`
 1. `sudo /etc/init.d/xrdp start`
-1. Windows(Start) &rarr; Remote Desktop Connection (localhost:3390)
+1. run Remote Desktop Connection\
+    * Windows(Start) &rarr; Remote Desktop Connection (localhost:3390)
 
 # Settings xfce GUI
 1. Application &rarr; Settings &rarr; Light Locker Settings &rarr; Enable light-locker --- (OFF)
