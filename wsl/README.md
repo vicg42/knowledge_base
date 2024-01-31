@@ -11,22 +11,22 @@
             * install ubunto 20.4.0.20220127
 1. run Ubuntu
     * Windows(Start) &rarr; Ubuntu
-1. `mkdir ~/work`
-1. `cd ~/work`
-1. `sudo apt update && sudo apt -y upgrade`
-1. [download wsl-xfce-gui-install.sh](https://github.com/vicg42/knowledge_base/blob/master/wsl/wsl-xfce-gui-install.sh)
-1. `cp /mnt/<path to wsl-xfce-gui-install.sh> ./`
-1. `./wsl-xfce-gui-install.sh`
+        1. `mkdir ~/work`
+        1. `cd ~/work`
+        1. `sudo apt update && sudo apt -y upgrade`
+        1. [download wsl-xfce-gui-install.sh](https://github.com/vicg42/knowledge_base/blob/master/wsl/wsl-xfce-gui-install.sh)
+        1. `cp /mnt/<path to wsl-xfce-gui-install.sh> ./`
+        1. `./wsl-xfce-gui-install.sh`
 
 # Run xfce GUI
 1. Install Windows Terminal
     * Windows(Start) &rarr; Microsoft Store &rarr; Windows Terminal
 1. Run Windows Terminal
     * Windows(Start) &rarr; Terminal
-1. `wsl`
-1. `sudo /etc/init.d/xrdp start`
-1. run Remote Desktop Connection\
-    * Windows(Start) &rarr; Remote Desktop Connection (localhost:3390)
+        1. `wsl`
+        1. `sudo /etc/init.d/xrdp start`
+        1. run Remote Desktop Connection\
+            * Windows(Start) &rarr; Remote Desktop Connection (localhost:3390)
 
 # Settings xfce GUI
 1. Application &rarr; Settings &rarr; Light Locker Settings &rarr; Enable light-locker --- (OFF)
