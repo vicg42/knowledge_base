@@ -11,11 +11,10 @@
             * install ubunto 20.4.0.20220127
 1. run Ubuntu
     * Windows(Start) &rarr; Ubuntu
-        1. `mkdir ~/work`
-        1. `cd ~/work`
+        1. `mkdir -p ~/work/_install && cd ~/work`
         1. `sudo apt update && sudo apt -y upgrade`
         1. [download wsl-xfce-gui-install.sh](https://github.com/vicg42/knowledge_base/blob/master/wsl/wsl-xfce-gui-install.sh)
-        1. `cp /mnt/<path to wsl-xfce-gui-install.sh> ./`
+        1. `cp /mnt/<path to wsl-xfce-gui-install.sh> ~/work/_install/ && cd ~/work/_install`
         1. `./wsl-xfce-gui-install.sh`
 
 # Run xfce GUI
