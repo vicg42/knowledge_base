@@ -46,3 +46,12 @@
 1. `cp /mnt/<path to wsl-run-script.sh .. > ./`
 1. `touch ./wsl.mac`
     * add mac address. (mac address format:  xx:xx:xx:xx:xx:xx)
+
+# WSL (Backup/Restore)
+## Backup WSL
+1. open PowerShell (Administration Mode)
+1. wsl --list
+1. wsl --export DISTRO-NAME PATH\FILE-NAME.tar
+
+## Restore WSL
+1. open PowerShell (Administration Mode)
