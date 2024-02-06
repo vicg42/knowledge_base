@@ -85,6 +85,35 @@
 1. sudo apt-get update
 1. sudo apt-get install google-chrome-stable
 
+### Install Xilinx
+
+1. start WSL GUI(XFCE)
+1. `sudo mkdir /home/program`
+1. `sudo chmod 777 /home/program`
+1. `sudo mkdir /mnt/iso`
+1. `sudo chmod 777 /mnt/iso`
+1. `sudo mount <path to Xilinx install iso file> /mnt/iso`
+1. `/mnt/iso/xsetup`
+    * select Vitis for install
+    * select Devices
+    * Select the installation directory: /home/program
+1. `source /home/program/Vitis/<release>/settings64.sh`
+1. `vlm`
+    * Load License &rarr; Copy License  --- (Path to License)
+1. `sudo /home/program/Vitis/<release>/scripts/installLibs.sh`
+<!-- 1. [Download Xilinx Runtime (XRT) and install](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
+    * `sudo dpkg -i <*.deb>` -->
+
+### Run Xilinx Vitis
+
+``` sh
+source /home/program/Vitis/<release>/settings64.sh
+#source /opt/xilinx/xrt/setup.sh
+export LIBRARY=/usr/lib/x86_64-linux-gnu
+vitis -w <>
+```
+
+
 ### Info
 
 * [To see all the distributions you have installed, go to PowerShell and run](https://askubuntu.com/questions/1380253/where-is-wsl-located-on-my-computer):
