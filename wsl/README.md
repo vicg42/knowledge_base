@@ -70,6 +70,20 @@
 1. `wsl`
 1. `su - user`
 
+### [Send Clipboard (WSL GUI <> Windows)](https://github.com/microsoft/WSL/issues/4440#issuecomment-638956838)
+
+1. Run xfce GUI WSL
+1. curl -sLo /tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
+1. unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
+1. chmod +x /tmp/win32yank.exe
+1. sudo mv /tmp/win32yank.exe /bin/
+
+### [Chrome install](https://askubuntu.com/questions/510056/how-to-install-google-chrome)
+
+1. wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+1. echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
+1. sudo apt-get update
+1. sudo apt-get install google-chrome-stable
 
 ### Info
 
