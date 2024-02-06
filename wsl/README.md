@@ -1,4 +1,7 @@
-# Install WSL, Ubuntu, GUI xfce
+# WSL
+
+## Install Ubuntu, GUI xfce
+
 1. Install WSL
     * Windows(Start) &rarr; Microsoft Store &rarr; Windows Subsystem for Linux
 1. [install chocolatey](https://chocolatey.org/install#individual)
@@ -17,7 +20,8 @@
         1. `cp /mnt/<path to wsl-xfce-gui-install.sh> ~/work/_install/ && cd ~/work/_install`
         1. `./wsl-xfce-gui-install.sh`
 
-# Run xfce GUI
+## Run xfce GUI
+
 1. Install Windows Terminal
     * Windows(Start) &rarr; Microsoft Store &rarr; Windows Terminal
 1. Run Windows Terminal
@@ -27,7 +31,8 @@
         1. run Remote Desktop Connection\
             * Windows(Start) &rarr; Remote Desktop Connection (localhost:3390)
 
-# Settings xfce GUI
+## Settings xfce GUI
+
 1. Application &rarr; Settings &rarr; Light Locker Settings &rarr; Enable light-locker --- (OFF)
 1. Application &rarr; Settings &rarr; Keyboard &rarr; Layout &rarr; Use system defaults --- (Uncheck)
 1. Application &rarr; Settings &rarr; Keyboard &rarr; Layout &rarr; Keyboard layout &rarr; Add --- (Russian)
@@ -38,7 +43,8 @@
 1. Move mouse to the task bar and push right button.
     * Panel &rarr; Add New Items &rarr; Keyboard Layouts
 
-# Change mac address WSL
+## Change mac address WSL
+
 1. `cd ~/work`
 1. [download wsl.conf](https://github.com/vicg42/knowledge_base/blob/master/wsl/wsl.conf)
 1. [download wsl-run-script.sh](https://github.com/vicg42/knowledge_base/blob/master/wsl/wsl-run-script.sh)
@@ -47,11 +53,24 @@
 1. `touch ./wsl.mac`
     * add mac address. (mac address format:  xx:xx:xx:xx:xx:xx)
 
-# WSL (Backup/Restore)
-## Backup WSL
-1. open PowerShell (Administration Mode)
-1. wsl --list
-1. wsl --export DISTRO-NAME PATH\FILE-NAME.tar
+## Backup/Restore
 
-## Restore WSL
+### Backup WSL
+
 1. open PowerShell (Administration Mode)
+1. `wsl -l -v`
+1. `wsl --export <DISTRO-NAME> <PATH\FILE-NAME.tar>`
+
+### Restore WSL
+
+1. open PowerShell (Administration Mode)
+1. `wsl --unregister DISTRO-NAME`
+1. `wsl --import DISTRO-NAME <Path to path current ext4.vhdx> <Path to backup archive (*.tar)>`
+
+### Info
+
+* [To see all the distributions you have installed, go to PowerShell and run](https://askubuntu.com/questions/1380253/where-is-wsl-located-on-my-computer):
+
+``` powershell
+Get-ChildItem "HKCU:\Software\Microsoft\Windows\CurrentVersion\Lxss" -Recurse
+```
