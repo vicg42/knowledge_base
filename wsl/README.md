@@ -65,7 +65,7 @@
 
 1. open PowerShell (Administration Mode)
 1. `wsl --unregister DISTRO-NAME`
-1. `wsl --import DISTRO-NAME <Path to path current ext4.vhdx> <Path to backup archive (*.tar)>`
+1. `wsl --import <DISTRO-NAME> <Path to path current ext4.vhdx> <Path to backup archive (*.tar)>`
 1. open Windows Terminal
 1. `wsl`
 1. `su - user`
