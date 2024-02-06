@@ -109,7 +109,7 @@
 ``` sh
 source /home/program/Vitis/<release>/settings64.sh
 #source /opt/xilinx/xrt/setup.sh
-export LIBRARY=/usr/lib/x86_64-linux-gnu
+export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH
 vitis -w <>
 ```
 
