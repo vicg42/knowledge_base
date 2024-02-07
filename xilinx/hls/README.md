@@ -88,3 +88,11 @@ Options allowed in a config file:
     ``` bash
     vitis-run --mode hls --csim --config ./hls_config.cfg --work_dir ./
     ```
+
+1. Example
+    1. run vitis
+    ``` bash
+    source /home/program/Vitis/2023.2/settings64.sh
+    export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH
+    vitis_hls -f ./run_hls.tcl
+    ```
