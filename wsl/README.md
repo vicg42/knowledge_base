@@ -67,8 +67,7 @@
 1. `wsl --unregister DISTRO-NAME`
 1. `wsl --import <DISTRO-NAME> <Path to path current ext4.vhdx> <Path to backup archive (*.tar)>`
 1. open Windows Terminal
-1. `wsl`
-1. `su - user`
+1. `wsl -u <user name>`
 
 ### [Send Clipboard (WSL GUI <> Windows)](https://github.com/microsoft/WSL/issues/4440#issuecomment-638956838)
 
