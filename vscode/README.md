@@ -26,7 +26,14 @@
                     "includePath": [
                         "${workspaceFolder}/**",
                         "/home/program/Vitis_HLS/2023.2/include",
-                        "/home/program/Vitis_HLS/2023.2/include/etc"
+                        "/home/program/Vitis_HLS/2023.2/include/etc",
+                        "/home/program/Vitis_HLS/2023.2/lnx64/tools/auto_cc/include",
+                        "/home/program/Vitis_HLS/2023.2/tps/lnx64/gcc-8.3.0/include",
+                        "/home/program/Vitis_HLS/2023.2/tps/lnx64/gcc-8.3.0/include/c++/8.3.0",
+                        "/home/program/Vitis_HLS/2023.2/tps/lnx64/gcc-8.3.0/include/c++/8.3.0/backward",
+                        "/home/program/Vitis_HLS/2023.2/tps/lnx64/gcc-8.3.0/include/c++/8.3.0/x86_64-pc-linux-gnu",
+                        "/home/program/Vitis_HLS/2023.2/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/include",
+                        "/home/program/Vitis_HLS/2023.2/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/include-fixed"
                     ],
                     "defines": [],
                     "compilerPath": "/opt/rh/devtoolset-9/root/usr/bin/g++",
