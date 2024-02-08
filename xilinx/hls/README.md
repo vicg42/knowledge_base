@@ -1,7 +1,7 @@
 # HLS
 ## Vitis Unified Software Platform
 ### Command line
-#### compile
+#### [compile && simulation](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/vitis-v-and-vitis-run-Commands)
 1. Help
 
 ``` txt
