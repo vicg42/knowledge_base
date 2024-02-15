@@ -31,6 +31,32 @@
         1. run Remote Desktop Connection\
             * Windows(Start) &rarr; Remote Desktop Connection (localhost:3390)
 
+### Run wsl with systemd + run xfce GUI
+
+1. WSL
+    1. `mc -e /etc/wsl.conf`
+
+        ``` ini
+        [boot]
+        systemd = true
+        ```
+
+    1. `mc -e /etc/xrdp/startwm.sh`
+        * add string before `#test -x /etc/X11/Xsession && exec /etc/X11/Xsession`
+
+        ``` sh
+        unset DBUS_SESSION_BUS_ADDRESS
+        unset XDG_RUNTIME_DIR
+        ```
+
+    1. wsl
+
+1. Windows Terminal
+    1. wsl --shutdown
+    1. wsl
+    1. run Remote Desktop Connection\
+        * Windows(Start) &rarr; Remote Desktop Connection (localhost:3390)
+
 ## Settings xfce GUI
 
 1. Application &rarr; Settings &rarr; Light Locker Settings &rarr; Enable light-locker --- (OFF)
@@ -72,15 +98,15 @@
 ### [Send Clipboard (WSL GUI <> Windows)](https://github.com/microsoft/WSL/issues/4440#issuecomment-638956838)
 
 1. Run xfce GUI WSL
-1. curl -sLo /tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
+1. curl -sLo /tmp/win32yank.zip <https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip>
 1. unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
 1. chmod +x /tmp/win32yank.exe
 1. sudo mv /tmp/win32yank.exe /bin/
 
 ### [Chrome install](https://askubuntu.com/questions/510056/how-to-install-google-chrome)
 
-1. wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-1. echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
+1. wget -q -O - <https://dl-ssl.google.com/linux/linux_signing_key.pub> | sudo apt-key add -
+1. echo 'deb [arch=amd64] <http://dl.google.com/linux/chrome/deb/> stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
 1. sudo apt-get update
 1. sudo apt-get install google-chrome-stable
 
@@ -111,7 +137,6 @@ source /home/program/Vitis/<release>/settings64.sh
 export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH
 vitis -w <>
 ```
-
 
 ### Info
 
