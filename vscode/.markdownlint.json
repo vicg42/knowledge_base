@@ -1,0 +1,10 @@
+{
+    "no-blanks-blockquote": false,
+    "first-line-heading": false,
+    "line-length": {"line_length": 120},
+    "no-multiple-blanks": {"maximum": 2},
+    "ul-indent": {"indent": 4},
+    "ul-style": {"style": "sublist"},
+    "blanks-around-headings": {"lines_above":2, "lines_below": 1},
+    "single-h1": false
+}

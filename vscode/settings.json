@@ -1,0 +1,67 @@
+{
+    "window.title": "${rootName}${separator}${dirty}${activeEditorLong}",
+    "workbench.editor.openPositioning": "last",
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.editor.empty.hint": "hidden",
+    "workbench.editorAssociations": {
+        "*.drawio": "drawio-vscode.editor"
+    },
+    "editor.renderWhitespace": "all",
+    "editor.accessibilitySupport": "off",
+    "editor.largeFileOptimizations": false,
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+    "files.trimTrailingWhitespace": true,
+    "trailing-spaces.trimOnSave": true,
+    "extensions.ignoreRecommendations": false,
+    "[clojure]": {},
+    "hediet.vscode-drawio.theme": "atlas",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "[python]": {},
+    "linesinfostatusbar.totalDisplayFormat": "Total Lines: %d",
+    "hediet.vscode-drawio.resizeImages": null,
+    "terminal.integrated.automationProfile.windows": {},
+    "verible-formatter.flagFile": ".verilog_format", //https://marketplace.visualstudio.com/items?itemName=kukdh1.verible-formatter
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "[verilog]": {
+        "editor.defaultFormatter": "kukdh1.verible-formatter",
+        "remove-empty-lines.allowedNumberOfEmptyLines": 1 //https://marketplace.visualstudio.com/items?itemName=usernamehw.remove-empty-lines
+    },
+    "[systemverilog]": {
+        "editor.defaultFormatter": "kukdh1.verible-formatter", //https://marketplace.visualstudio.com/items?itemName=kukdh1.verible-formatter
+        "remove-empty-lines.allowedNumberOfEmptyLines": 1 //https://marketplace.visualstudio.com/items?itemName=usernamehw.remove-empty-lines
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[markdown]": {
+        "editor.defaultFormatter": "DavidAnson.vscode-markdownlint" //https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint
+    },
+    "[tcl]": {
+        "editor.defaultFormatter": "bitwisecook.tcl" //https://marketplace.visualstudio.com/items?itemName=bitwisecook.tcl
+    },
+    "markdown-preview-enhanced.plantumlJarPath": "/home/user/Downloads/plantuml-1.2024.3.jar",
+    "markdown.styles": [
+        "https://cdn.jsdelivr.net/gh/dhdhagar/vscode-md-preview-light/style.min.css"
+    ],
+    "markdown-preview-enhanced.pandocMarkdownFlavor": "markdown",
+    "markdown-preview-enhanced.mathInlineDelimiters": [
+        [
+            "$`",
+            "`$"
+        ]
+    ],
+    "markdown-preview-enhanced.breakOnSingleNewLine": false,
+    "markdown-preview-enhanced.codeBlockTheme": "dark.css",
+    "markdown-preview-enhanced.previewTheme": "vue.css",
+    "files.associations": {
+        "*.v": "systemverilog",
+        "*.sv": "systemverilog",
+        "*.vh": "systemverilog"
+    },
+    "verilog.linting.path": "verible-verilog-lint" //https://marketplace.visualstudio.com/items?itemName=mshr-h.VerilogHDL
+}
