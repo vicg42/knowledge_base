@@ -24,6 +24,7 @@
     "hediet.vscode-drawio.resizeImages": null,
     "terminal.integrated.automationProfile.windows": {},
     "verible-formatter.flagFile": ".verilog_format", //https://marketplace.visualstudio.com/items?itemName=kukdh1.verible-formatter
+    "remove-empty-lines.runOnSave": true,
     "[cpp]": {
         "editor.defaultFormatter": "ms-vscode.cpptools"
     },
