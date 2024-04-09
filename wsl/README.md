@@ -1,5 +1,6 @@
 # WSL
 
+
 ## Install Ubuntu, GUI xfce
 
 1. Install WSL
@@ -17,8 +18,8 @@
         1. `mkdir -p ~/work/_install && cd ~/work`
         1. `sudo apt update && sudo apt -y upgrade`
         1. [download wsl-xfce-gui-install.sh](https://github.com/vicg42/knowledge_base/blob/master/wsl/wsl-xfce-gui-install.sh)
-        1. `cp /mnt/<path to wsl-xfce-gui-install.sh> ~/work/_install/ && cd ~/work/_install`
         1. `./wsl-xfce-gui-install.sh`
+
 
 ## Run xfce GUI
 
@@ -31,6 +32,7 @@
         1. run Remote Desktop Connection\
             * Windows(Start) &rarr; Remote Desktop Connection (localhost:3390)
 
+
 ### Run wsl with systemd + run xfce GUI
 
 1. WSL
@@ -42,7 +44,7 @@
         ```
 
     1. `mc -e /etc/xrdp/startwm.sh`
-        * add string before `#test -x /etc/X11/Xsession && exec /etc/X11/Xsession`
+        - add string before `#test -x /etc/X11/Xsession && exec /etc/X11/Xsession`
 
         ``` sh
         unset DBUS_SESSION_BUS_ADDRESS
@@ -55,7 +57,8 @@
     1. wsl --shutdown
     1. wsl
     1. run Remote Desktop Connection\
-        * Windows(Start) &rarr; Remote Desktop Connection (localhost:3390)
+        - Windows(Start) &rarr; Remote Desktop Connection (localhost:3390)
+
 
 ## Settings xfce GUI
 
@@ -69,6 +72,7 @@
 1. Move mouse to the task bar and push right button.
     * Panel &rarr; Add New Items &rarr; Keyboard Layouts
 
+
 ## Change mac address WSL
 
 1. `cd ~/work`
@@ -79,13 +83,16 @@
 1. `touch ./wsl.mac`
     * add mac address. (mac address format:  xx:xx:xx:xx:xx:xx)
 
+
 ## Backup/Restore
+
 
 ### Backup WSL
 
 1. open PowerShell (Administration Mode)
 1. `wsl -l -v`
 1. `wsl --export <DISTRO-NAME> <PATH\FILE-NAME.tar>`
+
 
 ### Restore WSL
 
@@ -95,6 +102,7 @@
 1. open Windows Terminal
 1. `wsl -u <user name>`
 
+
 ### [Send Clipboard (WSL GUI <> Windows)](https://github.com/microsoft/WSL/issues/4440#issuecomment-638956838)
 
 1. Run xfce GUI WSL
@@ -103,12 +111,14 @@
 1. chmod +x /tmp/win32yank.exe
 1. sudo mv /tmp/win32yank.exe /bin/
 
+
 ### [Chrome install](https://askubuntu.com/questions/510056/how-to-install-google-chrome)
 
 1. wget -q -O - <https://dl-ssl.google.com/linux/linux_signing_key.pub> | sudo apt-key add -
 1. echo 'deb [arch=amd64] <http://dl.google.com/linux/chrome/deb/> stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
 1. sudo apt-get update
 1. sudo apt-get install google-chrome-stable
+
 
 ### Install Xilinx
 
@@ -137,6 +147,7 @@ source /home/program/Vitis/<release>/settings64.sh
 export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH
 vitis -w <>
 ```
+
 
 ### Info
 
