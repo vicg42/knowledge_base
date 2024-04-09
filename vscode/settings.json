@@ -25,8 +25,13 @@
     "terminal.integrated.automationProfile.windows": {},
     "verible-formatter.flagFile": ".verilog_format", //https://marketplace.visualstudio.com/items?itemName=kukdh1.verible-formatter
     "remove-empty-lines.runOnSave": true,
+    "c-cpp-flylint.flexelint.enable": false,
+    "c-cpp-flylint.clang.enable": false,
+    "c-cpp-flylint.flawfinder.enable": false,
+    "c-cpp-flylint.lizard.enable": false,
     "[cpp]": {
-        "editor.defaultFormatter": "ms-vscode.cpptools"
+        "editor.defaultFormatter": "ms-vscode.cpptools",
+        "c-cpp-flylint.cppcheck.enable": false
     },
     "[verilog]": {
         "editor.defaultFormatter": "kukdh1.verible-formatter",
@@ -45,6 +50,9 @@
     "[tcl]": {
         "editor.defaultFormatter": "bitwisecook.tcl" //https://marketplace.visualstudio.com/items?itemName=bitwisecook.tcl
     },
+    "[toml]": {
+        "editor.defaultFormatter": "tamasfe.even-better-toml" //https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml
+    },
     "markdown-preview-enhanced.plantumlJarPath": "/home/user/Downloads/plantuml-1.2024.3.jar",
     "markdown.styles": [
         "https://cdn.jsdelivr.net/gh/dhdhagar/vscode-md-preview-light/style.min.css"
@@ -62,7 +70,8 @@
     "files.associations": {
         "*.v": "systemverilog",
         "*.sv": "systemverilog",
-        "*.vh": "systemverilog"
+        "*.vh": "systemverilog",
+        "*.svh": "systemverilog"
     },
     "verilog.linting.path": "verible-verilog-lint" //https://marketplace.visualstudio.com/items?itemName=mshr-h.VerilogHDL
 }
