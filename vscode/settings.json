@@ -24,21 +24,23 @@
     "hediet.vscode-drawio.resizeImages": null,
     "terminal.integrated.automationProfile.windows": {},
     "verible-formatter.flagFile": ".verilog_format", //https://marketplace.visualstudio.com/items?itemName=kukdh1.verible-formatter
-    "remove-empty-lines.runOnSave": true,
     "c-cpp-flylint.flexelint.enable": false,
     "c-cpp-flylint.clang.enable": false,
     "c-cpp-flylint.flawfinder.enable": false,
     "c-cpp-flylint.lizard.enable": false,
+    "c-cpp-flylint.cppcheck.enable": true,
     "[cpp]": {
         "editor.defaultFormatter": "ms-vscode.cpptools",
-        "c-cpp-flylint.cppcheck.enable": false
+        "remove-empty-lines.runOnSave": false
     },
     "[verilog]": {
         "editor.defaultFormatter": "kukdh1.verible-formatter",
+        "remove-empty-lines.runOnSave": true,
         "remove-empty-lines.allowedNumberOfEmptyLines": 1 //https://marketplace.visualstudio.com/items?itemName=usernamehw.remove-empty-lines
     },
     "[systemverilog]": {
         "editor.defaultFormatter": "kukdh1.verible-formatter", //https://marketplace.visualstudio.com/items?itemName=kukdh1.verible-formatter
+        "remove-empty-lines.runOnSave": true,
         "remove-empty-lines.allowedNumberOfEmptyLines": 1 //https://marketplace.visualstudio.com/items?itemName=usernamehw.remove-empty-lines
     },
     "[jsonc]": {
