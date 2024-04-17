@@ -1,0 +1,12 @@
+[Unit]
+Description=licensing service
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/opt/lmgrd/lmgrd_run.sh
+ExecStop=/opt/lmgrd/lmgrd_stop.sh
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target
