@@ -4,17 +4,19 @@
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.startupEditor": "newUntitledFile",
     "workbench.editor.empty.hint": "hidden",
-    "workbench.editorAssociations": {
-        "*.drawio": "drawio-vscode.editor"
-    },
+    // "workbench.editorAssociations": {
+    //     "*.drawio": "drawio-vscode.editor"
+    // },
     "editor.renderWhitespace": "all",
     "editor.accessibilitySupport": "off",
     "editor.largeFileOptimizations": false,
     "editor.formatOnSave": true,
     "editor.tabSize": 4,
     "editor.detectIndentation": false,
+    "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
-    "trailing-spaces.trimOnSave": true,
+    "files.trimFinalNewlines": true,
+    // "trailing-spaces.trimOnSave": true,
     "extensions.ignoreRecommendations": false,
     "[clojure]": {},
     "hediet.vscode-drawio.theme": "atlas",
@@ -22,7 +24,7 @@
     "[python]": {},
     "linesinfostatusbar.totalDisplayFormat": "Total Lines: %d",
     "hediet.vscode-drawio.resizeImages": null,
-    "terminal.integrated.automationProfile.windows": {},
+    // "terminal.integrated.automationProfile.windows": {},
     "verible-formatter.flagFile": ".verilog_format", //https://marketplace.visualstudio.com/items?itemName=kukdh1.verible-formatter
     "c-cpp-flylint.flexelint.enable": false,
     "c-cpp-flylint.clang.enable": false,
@@ -70,10 +72,124 @@
     "markdown-preview-enhanced.codeBlockTheme": "dark.css",
     "markdown-preview-enhanced.previewTheme": "vue.css",
     "files.associations": {
-        "*.v": "systemverilog",
         "*.sv": "systemverilog",
+        "*.v": "systemverilog",
         "*.vh": "systemverilog",
-        "*.svh": "systemverilog"
+        "*.svh": "systemverilog",
+        "Makefile.user": "makefile",
+        "Makefile.docker": "makefile",
+        "array": "cpp",
+        "atomic": "cpp",
+        "strstream": "cpp",
+        "bit": "cpp",
+        "*.tcc": "cpp",
+        "cctype": "cpp",
+        "chrono": "cpp",
+        "clocale": "cpp",
+        "cmath": "cpp",
+        "codecvt": "cpp",
+        "compare": "cpp",
+        "complex": "cpp",
+        "concepts": "cpp",
+        "condition_variable": "cpp",
+        "cstdarg": "cpp",
+        "cstddef": "cpp",
+        "cstdint": "cpp",
+        "cstdio": "cpp",
+        "cstdlib": "cpp",
+        "cstring": "cpp",
+        "ctime": "cpp",
+        "cwchar": "cpp",
+        "cwctype": "cpp",
+        "deque": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp",
+        "exception": "cpp",
+        "algorithm": "cpp",
+        "functional": "cpp",
+        "iterator": "cpp",
+        "memory": "cpp",
+        "memory_resource": "cpp",
+        "numeric": "cpp",
+        "random": "cpp",
+        "ratio": "cpp",
+        "string_view": "cpp",
+        "system_error": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "fstream": "cpp",
+        "initializer_list": "cpp",
+        "iomanip": "cpp",
+        "iosfwd": "cpp",
+        "iostream": "cpp",
+        "istream": "cpp",
+        "limits": "cpp",
+        "mutex": "cpp",
+        "new": "cpp",
+        "numbers": "cpp",
+        "ostream": "cpp",
+        "semaphore": "cpp",
+        "sstream": "cpp",
+        "stdexcept": "cpp",
+        "stop_token": "cpp",
+        "streambuf": "cpp",
+        "thread": "cpp",
+        "cinttypes": "cpp",
+        "typeinfo": "cpp",
+        "*.h-r": "c",
+        "future": "cpp"
     },
-    "verilog.linting.path": "verible-verilog-lint" //https://marketplace.visualstudio.com/items?itemName=mshr-h.VerilogHDL
+    "verilog.linting.path": "verible-verilog-lint",
+    "evenBetterToml.taplo.configFile.path": ".taplo.toml", //https://taplo.tamasfe.dev/configuration/file.html
+    "cSpell.languageSettings": [
+        // This one works with Python
+        {
+            "languageId": "python",
+            "includeRegExpList": [
+                "/#.*/",
+                "/('''|\"\"\")[^\\1]+?\\1/g",
+                "strings"
+            ]
+        },
+        // This one works with JavaScript, Typescript, etc
+        {
+            "languageId": "javascript,typescript",
+            "includeRegExpList": [
+                "CStyleComment",
+                "strings"
+            ]
+        },
+        // Use with cpp or c files
+        {
+            "languageId": "cpp,c",
+            // Turn off compound words, because it is only checking strings.
+            "allowCompoundWords": false,
+            // Only check comments and strings
+            "includeRegExpList": [
+                "CStyleComment",
+                "string"
+            ],
+            // Exclude includes, because they are also strings.
+            "ignoreRegExpList": [
+                "/#include.*/"
+            ]
+        }
+    ],
+    "cSpell.language": "en, ru",
+    "cSpell.enabled": true,
+    "cSpell.words": [
+        "cocotb",
+        "csim",
+        "Efinix",
+        "questasim",
+        "regif",
+        "shls"
+    ]
 }
